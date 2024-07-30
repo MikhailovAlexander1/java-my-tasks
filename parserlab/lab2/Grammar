@@ -1,0 +1,71 @@
+E -> Variable : Array ;
+E -> ε
+Variable -> var name
+Array -> Type ArrayType
+ArrayType -> < Type >
+Type -> name
+
+Терминалы: <, >, :, ;, var, name, ε, $
+Нетерминалы: E, V, A, A', T
+_________________________
+        FIRST    FOLLOW |
+E       var ε    $      |
+V       var      :      |
+A       name     ;      |
+A'      <        ;      |
+T       name     < >    |
+________________________|
+
+____________________________________________________
+
+E   -> V : A ;
+E   -> ε
+V   -> var name
+A   -> T AT
+AT  -> < TT >
+TT  -> T TTT
+TTT -> AT
+TTT -> ε
+T   -> name
+
+_________________________
+        FIRST    FOLLOW |
+E       var ε    $      |
+V       var      :      |
+A       name     ;      |
+AT      <        ; >    |
+TT      name     >      |
+TTT     < ε      >      |
+T       name     < >    |
+________________________|
+
+
+E   -> V : A ;
+E   -> ε
+V   -> var name
+A   -> T AT
+AT  -> < TT ATCONT >
+ATCONT -> ε
+ATCONT -> , TT ATCONT
+TT  -> T TTT
+TTT -> AT
+TTT -> ε
+T   -> name
+
+_________________________
+        FIRST    FOLLOW |
+E       var ε    $      |
+V       var      :      |
+A       name     ;      |
+AT      <        ; > ,  |
+ATCONT  ε ,      >      |
+TT      name     > ,    |
+TTT     < ε      > ,    |
+T       name     < > ,  |
+________________________|
+
+поддержка нескольких аргументов template например, HashMap
+
+
+
+A => +Ag
